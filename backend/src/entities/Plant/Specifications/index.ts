@@ -1,10 +1,6 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
-
-enum Duration {
-  annual = 'Anual',
-  biennial = 'Biennial',
-  perennial = 'Perennial',
-}
+import { PlantDuration } from '../../../enum';
+import Flower from './Flower';
 
 @Entity()
 export class Specifications {
@@ -16,12 +12,14 @@ export class Specifications {
 
   @Column({
     type: 'enum',
-    enum: Duration,
-    default: Duration.perennial,
+    enum: PlantDuration,
+    default: PlantDuration.perennial,
   })
-  duration: Duration;
+  duration: PlantDuration;
 
-  // TODO: Add flower
+  @Column(() => Flower)
+  flower: Flower;
+
   // TODO: Add foliage
   // TODO: Add fruits
 }
