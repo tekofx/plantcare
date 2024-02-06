@@ -1,6 +1,6 @@
+import Navbar from '@/components/NavBar';
+import { ColorSchemeScript, Container, Grid, GridCol, MantineProvider } from '@mantine/core';
 import '@mantine/core/styles.css';
-import React from 'react';
-import { MantineProvider, ColorSchemeScript } from '@mantine/core';
 import { theme } from '../theme';
 
 export const metadata = {
@@ -20,7 +20,16 @@ export default function RootLayout({ children }: { children: any }) {
         />
       </head>
       <body>
-        <MantineProvider theme={theme}>{children}</MantineProvider>
+        <MantineProvider theme={theme}>
+          <Grid>
+            <GridCol span={4}>
+              <Navbar />
+            </GridCol>
+            <GridCol>
+              <Container>{children}</Container>
+            </GridCol>
+          </Grid>
+        </MantineProvider>
       </body>
     </html>
   );
