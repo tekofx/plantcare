@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
 import { config } from '../config';
 
+// eslint-disable-next-line consistent-return
 export default function auth(req: any, res: any, next: any) {
   try {
     const token = req.headers.authorization.split(' ')[1];

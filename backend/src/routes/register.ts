@@ -11,35 +11,32 @@ router.get('/', async (req, res) => {
     if (users.length !== 0) {
       console.log('User exists');
       return res.sendStatus(200);
-    } else {
-      console.log("User doesn't exist");
-      return res.sendStatus(404);
     }
+    console.log("User doesn't exist");
+    return res.sendStatus(404);
   });
 });
 
 router.post('/', async (req, res) => {
-  let { username, password } = req.body;
-  const existsUser = await UserRepo.findOne({ where: { username: username } });
+  const { username, password } = req.body;
+  const existsUser = await UserRepo.findOne({ where: { username } });
   if (existsUser) {
     return res.status(400).send('User already exists');
   }
 
-  bcrypt.hash(password, 10).then(async (hashedPassword) => {
+  try {
+    const hashedPassword = await bcrypt.hash(password, 10);
     // Store hash in your password DB.
-    console.log('createing user...');
+    console.log('creating user...');
     await UserRepo.save({
-      username: username,
+      username,
       password: hashedPassword,
-    })
-      .catch((e) => {
-        console.log(e);
-        return res.status(500).send('Error creating user');
-      })
-      .then(() => {
-        return res.send('User created');
-      });
-  });
+    });
+    return res.send('User created');
+  } catch (e) {
+    console.log(e);
+    return res.status(500).send('Error creating user');
+  }
 });
 
 export default router;
