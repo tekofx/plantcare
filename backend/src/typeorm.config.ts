@@ -1,9 +1,6 @@
 import { DataSource } from 'typeorm';
 import { config } from './config';
 import { Plant, User } from './entities';
-if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config();
-}
 
 export const AppDataSource = new DataSource({
   type: 'mysql',

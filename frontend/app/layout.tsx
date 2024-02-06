@@ -1,4 +1,5 @@
 import Navbar from '@/frontend/components/NavBar';
+// eslint-disable-next-line import/order
 import { ColorSchemeScript, Container, Grid, GridCol, MantineProvider } from '@mantine/core';
 import '@mantine/core/styles.css';
 import { theme } from '../theme';
