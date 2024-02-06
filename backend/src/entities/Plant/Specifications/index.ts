@@ -20,4 +20,8 @@ export class Specifications {
     default: Duration.perennial,
   })
   duration: Duration;
+
+  // TODO: Add flower
+  // TODO: Add foliage
+  // TODO: Add fruits
 }
