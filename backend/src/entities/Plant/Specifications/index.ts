@@ -1,12 +1,8 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column } from 'typeorm';
 import { PlantDuration } from '../../../enum';
 import Flower from './Flower';
 
-@Entity()
 export class Specifications {
-  @PrimaryGeneratedColumn()
-  id: number;
-
   @Column()
   height: number; // cm
 

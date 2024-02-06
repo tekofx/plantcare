@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import { Growing } from './Growing';
 import { Specifications } from './Specifications';
 
@@ -13,11 +13,9 @@ export class Plant {
   @Column()
   cientificName: string;
 
-  @OneToOne(() => Growing)
-  @JoinColumn()
+  @Column(() => Growing)
   growing: Growing;
 
-  @OneToOne(() => Specifications)
-  @JoinColumn()
+  @Column(() => Specifications)
   specifications: Specifications;
 }

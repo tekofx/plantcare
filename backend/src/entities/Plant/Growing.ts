@@ -1,10 +1,6 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column } from 'typeorm';
 
-@Entity()
 export class Growing {
-  @PrimaryGeneratedColumn()
-  id: number;
-
   @Column()
   light: string;
 
