@@ -9,5 +9,5 @@ export class Plant {
   name: string;
 
   @Column()
-  color: string;
+  cientificName: string;
 }
