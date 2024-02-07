@@ -9,7 +9,6 @@ export class Specifications {
   @Column({
     type: 'enum',
     enum: PlantDuration,
-    default: PlantDuration.perennial,
     nullable: true,
   })
   duration: PlantDuration;
