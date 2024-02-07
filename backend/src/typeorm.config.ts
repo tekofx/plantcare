@@ -14,4 +14,5 @@ export const AppDataSource = new DataSource({
   logging: false,
 });
 export const PlantDataRepo = AppDataSource.manager.getRepository(PlantData);
+export const PlantRepo = AppDataSource.manager.getRepository(Plant);
 export const UserRepo = AppDataSource.manager.getRepository(User);

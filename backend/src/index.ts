@@ -2,7 +2,7 @@ import cors from 'cors';
 import express from 'express';
 import session from 'express-session';
 import 'reflect-metadata';
-import { login, plantdata, register } from './routes';
+import { login, plantdata, plants, register } from './routes';
 import { AppDataSource } from './typeorm.config';
 
 const port = 3001;
@@ -36,6 +36,7 @@ app.get('/', (req, res) => {
 app.use('/login', login);
 app.use('/register', register);
 app.use('/plantdata', plantdata);
+app.use('/plants', plants);
 
 app.listen(port, () => {
   console.log(`Listening on port ${port}...`);
