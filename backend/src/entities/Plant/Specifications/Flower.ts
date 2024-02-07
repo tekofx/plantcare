@@ -12,7 +12,7 @@ export default class Flower {
   @Column({
     type: 'enum',
     enum: FlowerColors,
-    default: FlowerColors.blanco,
+    default: FlowerColors.white,
   })
   color: FlowerColors;
 }

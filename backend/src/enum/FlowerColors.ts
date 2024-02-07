@@ -1,13 +1,13 @@
 enum FlowerColors {
-  rojo = 'rojo',
-  naranja = 'naranja',
-  amarillo = 'amarillo',
-  verde = 'verde',
-  azul = 'azul',
-  morado = 'morado',
-  marron = 'marron',
-  gris = 'gris',
-  blanco = 'blanco',
-  negro = 'negro',
+  white = 'White',
+  yellow = 'Yellow',
+  orange = 'Orange',
+  red = 'Red',
+  pink = 'Pink',
+  purple = 'Purple',
+  blue = 'Blue',
+  green = 'Green',
+  brown = 'Brown',
+  black = 'Black',
 }
 export default FlowerColors;

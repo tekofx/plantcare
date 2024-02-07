@@ -5,7 +5,7 @@ export class Growing {
   light: string;
 
   @Column()
-  atmosphericHumidity: string;
+  humidity: number;
 
   @Column()
   minTemperature: number;
