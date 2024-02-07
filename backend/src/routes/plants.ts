@@ -30,4 +30,20 @@ router.post('/', auth, async (req, res) => {
     });
 });
 
+router.get('/:id', auth, async (req, res) => {
+  const { id } = req.params;
+
+  await PlantRepo.findOne({ where: { id: Number(id) } })
+    .then((plant) => {
+      if (plant) {
+        return res.send(plant);
+      }
+      return res.status(404).send('Plant not found');
+    })
+    .catch((error) => {
+      console.error(error);
+      return res.status(500).send('An error occurred');
+    });
+});
+
 export default router;
