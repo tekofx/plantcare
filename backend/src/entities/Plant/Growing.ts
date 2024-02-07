@@ -8,12 +8,6 @@ export class Growing {
   atmosphericHumidity: string;
 
   @Column()
-  minPh: number;
-
-  @Column()
-  maxPh: number;
-
-  @Column()
   minTemperature: number;
 
   @Column()

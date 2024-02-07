@@ -15,7 +15,4 @@ export class Specifications {
 
   @Column(() => Flower)
   flower: Flower;
-
-  // TODO: Add foliage
-  // TODO: Add fruits
 }

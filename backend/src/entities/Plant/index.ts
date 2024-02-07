@@ -8,7 +8,7 @@ export class Plant {
   id: number;
 
   @Column()
-  name: string;
+  commonName: string;
 
   @Column()
   cientificName: string;
