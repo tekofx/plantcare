@@ -6,6 +6,7 @@ export default class Flower {
     type: 'enum',
     enum: Visibility,
     default: Visibility.unknown,
+    nullable: true,
   })
   visibility: Visibility;
 
@@ -13,6 +14,7 @@ export default class Flower {
     type: 'enum',
     enum: FlowerColors,
     default: FlowerColors.white,
+    nullable: true,
   })
   color: FlowerColors;
 }

@@ -1,15 +1,15 @@
 import { Column } from 'typeorm';
 
 export class Growing {
-  @Column()
+  @Column({ nullable: true })
   light: string;
 
-  @Column()
+  @Column({ nullable: true })
   humidity: number;
 
-  @Column()
+  @Column({ nullable: true })
   minTemperature: number;
 
-  @Column()
+  @Column({ nullable: true })
   maxTemperature: number;
 }

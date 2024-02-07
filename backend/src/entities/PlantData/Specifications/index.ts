@@ -3,13 +3,14 @@ import { PlantDuration } from '../../../enum';
 import Flower from './Flower';
 
 export class Specifications {
-  @Column()
+  @Column({ nullable: true })
   height: number; // cm
 
   @Column({
     type: 'enum',
     enum: PlantDuration,
     default: PlantDuration.perennial,
+    nullable: true,
   })
   duration: PlantDuration;
 
