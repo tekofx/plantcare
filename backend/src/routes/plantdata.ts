@@ -1,10 +1,10 @@
 import express from 'express';
 import auth from '../middleware/auth';
-import { PlantRepo } from '../typeorm.config';
+import { PlantDataRepo } from '../typeorm.config';
 
 const router = express.Router();
 router.get('/', auth, async (req, res) => {
-  await PlantRepo.find()
+  await PlantDataRepo.find()
     .then((plants) => res.send(plants))
     .catch((error) => {
       console.error(error);
@@ -15,14 +15,14 @@ router.get('/', auth, async (req, res) => {
 router.post('/', auth, async (req, res) => {
   const { commonName, cientificName, growing, specifications } = req.body;
 
-  const newPlant = PlantRepo.create({
+  const newPlant = PlantDataRepo.create({
     commonName,
     cientificName,
     growing,
     specifications,
   });
 
-  await PlantRepo.save(newPlant)
+  await PlantDataRepo.save(newPlant)
     .then((plant) => res.send(plant))
     .catch((error) => {
       console.error(error);
@@ -33,7 +33,7 @@ router.post('/', auth, async (req, res) => {
 router.get('/:id', auth, async (req, res) => {
   const { id } = req.params;
 
-  await PlantRepo.findOne({ where: { id: Number(id) } })
+  await PlantDataRepo.findOne({ where: { id: Number(id) } })
     .then((plant) => {
       if (plant) {
         return res.send(plant);
@@ -50,7 +50,7 @@ router.put('/:id', auth, async (req, res) => {
   const { id } = req.params;
   const { commonName, cientificName, growing, specifications } = req.body;
 
-  await PlantRepo.update(
+  await PlantDataRepo.update(
     { id: Number(id) },
     {
       commonName,

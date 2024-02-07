@@ -1,6 +1,6 @@
 import { DataSource } from 'typeorm';
 import { config } from './config';
-import { Plant, User } from './entities';
+import { PlantData, User } from './entities';
 
 export const AppDataSource = new DataSource({
   type: 'mysql',
@@ -9,9 +9,9 @@ export const AppDataSource = new DataSource({
   username: config.MYSQL_USER,
   password: config.MYSQL_PASSWORD,
   database: config.MYSQL_DATABASE,
-  entities: [Plant, User],
+  entities: [PlantData, User],
   synchronize: true,
   logging: false,
 });
-export const PlantRepo = AppDataSource.manager.getRepository(Plant);
+export const PlantDataRepo = AppDataSource.manager.getRepository(PlantData);
 export const UserRepo = AppDataSource.manager.getRepository(User);

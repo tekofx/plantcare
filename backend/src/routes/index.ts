@@ -1,5 +1,5 @@
 import login from './login';
-import plants from './plants';
+import plantdata from './plantdata';
 import register from './register';
 
-export { login, plants, register };
+export { login, plantdata, register };

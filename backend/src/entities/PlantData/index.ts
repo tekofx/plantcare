@@ -3,7 +3,7 @@ import { Growing } from './Growing';
 import { Specifications } from './Specifications';
 
 @Entity()
-export class Plant {
+export class PlantData {
   @PrimaryGeneratedColumn()
   id: number;
 
