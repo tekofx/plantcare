@@ -1,3 +1,5 @@
+'use client';
+
 import { Code, Group } from '@mantine/core';
 import {
   Icon2fa,
@@ -23,7 +25,7 @@ const data = [
   { link: '', label: 'Other Settings', icon: IconSettings },
 ];
 
-export default function NavbarSimple() {
+export default function NavBar() {
   const [active, setActive] = useState('Billing');
 
   const links = data.map((item) => (
