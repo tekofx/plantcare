@@ -1,4 +1,6 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+// eslint-disable-next-line import/no-cycle
+import { Plant } from '../Plant';
 import { Growing } from './Growing';
 import { Specifications } from './Specifications';
 
@@ -6,6 +8,9 @@ import { Specifications } from './Specifications';
 export class PlantData {
   @PrimaryGeneratedColumn()
   id: number;
+
+  @OneToMany(() => Plant, (plant) => plant.plantData)
+  plants: Plant[];
 
   @Column()
   commonName: string;
