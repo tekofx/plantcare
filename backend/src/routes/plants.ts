@@ -46,4 +46,29 @@ router.get('/:id', auth, async (req, res) => {
     });
 });
 
+router.put('/:id', auth, async (req, res) => {
+  const { id } = req.params;
+  const { commonName, cientificName, growing, specifications } = req.body;
+
+  await PlantRepo.update(
+    { id: Number(id) },
+    {
+      commonName,
+      cientificName,
+      growing,
+      specifications,
+    }
+  )
+    .then((result) => {
+      if (result.affected) {
+        return res.send('Plant updated');
+      }
+      return res.status(404).send('Plant not found');
+    })
+    .catch((error) => {
+      console.error(error);
+      return res.status(500).send('An error occurred');
+    });
+});
+
 export default router;
