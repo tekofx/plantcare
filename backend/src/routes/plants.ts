@@ -128,16 +128,27 @@ router.get('/:id', auth, async (req, res) => {
     });
 });
 
-router.put('/:id', auth, async (req, res) => {
+router.put('/:id', auth, uploadPlants.single('image'), async (req, res) => {
   const { id } = req.params;
   const { name, description, plantData } = req.body;
 
   let aux = plantData;
+  const image = req.file;
 
   if (aux) {
     aux = await PlantDataRepo.findOne({
       where: { id: plantData.id },
     });
+  }
+
+  if (image) {
+    await sharp(`${plantsDir}/${image.filename}`)
+      .resize(500)
+      .jpeg()
+      .toFile(path.join(plantsDir, `${id}.jpg`))
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   await PlantRepo.update(
@@ -146,6 +157,7 @@ router.put('/:id', auth, async (req, res) => {
       name,
       description,
       plantData: aux || undefined,
+      image: image ? `/plants/uploads/${id}.jpg` : '',
     }
   )
     .then((result) => {
