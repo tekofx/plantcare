@@ -1,6 +1,6 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 // eslint-disable-next-line import/no-cycle
-import { Plant } from '@/src/entities/Plant';
+import { Plant } from '../Plant';
 import { Growing } from './Growing';
 import { Specifications } from './Specifications';
 

@@ -12,10 +12,10 @@ export class Plant {
   @Column()
   name: string; // Custom name
 
-  @Column()
+  @Column({ default: '' })
   description: string; // Custom description
 
-  @Column()
+  @Column({ default: '' })
   image: string; // Custom image
 
   @ManyToOne(() => PlantData, (plantData) => plantData.plants)

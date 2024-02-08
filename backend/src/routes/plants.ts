@@ -1,6 +1,52 @@
 import express from 'express';
+import fs from 'fs';
+import multer, { FileFilterCallback } from 'multer';
+import path from 'path';
+import sharp from 'sharp';
 import auth from '../middleware/auth';
 import { PlantDataRepo, PlantRepo } from '../typeorm.config';
+
+const plantsDir = 'backend/data/uploads/plants';
+if (!fs.existsSync(plantsDir)) {
+  fs.mkdirSync(plantsDir, { recursive: true });
+}
+
+// Multer config
+const plantsStorage = multer.diskStorage({
+  destination(
+    req: Express.Request,
+    file: Express.Multer.File,
+    cb: (error: Error | null, destination: string) => void
+  ) {
+    cb(null, plantsDir);
+  },
+  filename(
+    req: Express.Request,
+    file: Express.Multer.File,
+    cb: (error: Error | null, filename: string) => void
+  ) {
+    // Guardar el archivo con un nombre temporal
+    //cb(null, Date.now() + path.extname(file.originalname));
+    cb(null, file.originalname);
+  },
+});
+
+// Función de filtro de archivos
+const fileFilter = (req: Express.Request, file: Express.Multer.File, cb: FileFilterCallback) => {
+  // Verificar si el archivo es una imagen
+  if (file.mimetype.startsWith('image/')) {
+    // Aceptar el archivo
+    cb(null, true);
+  } else {
+    // Rechazar el archivo
+    cb(null, false);
+  }
+};
+
+const uploadPlants = multer({
+  storage: plantsStorage,
+  fileFilter,
+});
 
 const router = express.Router();
 router.get('/', auth, async (req, res) => {
@@ -17,8 +63,9 @@ router.get('/', auth, async (req, res) => {
     });
 });
 
-router.post('/', auth, async (req, res) => {
+router.post('/', auth, uploadPlants.single('image'), async (req, res) => {
   const { name, description, plantData } = req.body;
+  const image = req.file;
 
   let aux = plantData;
 
@@ -34,15 +81,32 @@ router.post('/', auth, async (req, res) => {
     plantData: aux || undefined,
   });
 
-  await PlantRepo.save(newPlant)
-    .then(() => res.send('Plant created'))
+  const id = await PlantRepo.save(newPlant)
+    .then(() => {
+      res.send('Plant created');
+      return newPlant.id;
+    })
     .catch((error) => {
       console.error(error);
       return res.status(500).send('An error occurred');
     });
+  if (image) {
+    await sharp(`${plantsDir}/${image.filename}`)
+      .resize(500)
+      .jpeg()
+      .toFile(path.join(plantsDir, `${id}.jpg`))
+      .catch((error) => {
+        console.log(error);
+      });
+
+    newPlant.image = `/plants/uploads/${id}.jpg`;
+    await PlantRepo.save(newPlant);
+  }
 
   return null;
 });
+
+router.use('/uploads', auth, express.static(plantsDir));
 
 router.get('/:id', auth, async (req, res) => {
   const { id } = req.params;
