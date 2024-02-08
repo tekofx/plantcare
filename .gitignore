@@ -132,3 +132,4 @@ dist
 .DS_Store
 
 db_data/
+backend/data
