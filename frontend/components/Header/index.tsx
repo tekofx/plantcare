@@ -5,6 +5,7 @@ import { Burger, Container, Group } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { MantineLogo } from '@mantinex/mantine-logo';
 import { useState } from 'react';
+import ThemeSwitch from '../ThemeSwitch';
 import classes from './Header.module.css';
 
 const links = [
@@ -39,6 +40,7 @@ export default function HeaderSimple() {
                 <MantineLogo size={28} />
                 <Group gap={5} visibleFrom="xs">
                     {items}
+                    <ThemeSwitch />
                 </Group>
 
                 <Burger opened={opened} onClick={toggle} hiddenFrom="xs" size="sm" />
