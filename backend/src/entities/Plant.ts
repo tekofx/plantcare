@@ -15,6 +15,9 @@ export class Plant {
   @Column()
   description: string; // Custom description
 
+  @Column()
+  image: string; // Custom image
+
   @ManyToOne(() => PlantData, (plantData) => plantData.plants)
   plantData: PlantData;
 }
