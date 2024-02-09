@@ -19,9 +19,7 @@ export default function Login() {
 
   async function onClick() {
     await axios.post('/api/login', form.values).then((response) => {
-      console.log(response.data)
       cookies.set('TOKEN', response.data.token, { path: '/' });
-      console.log(response.data);
     });
   }
 
