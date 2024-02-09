@@ -101,6 +101,9 @@ router.post('/', auth, uploadPlants.single('image'), async (req, res) => {
         console.log(error);
       });
 
+    // Remove the temporary file
+    fs.unlinkSync(`${plantsDir}/${image.filename}`);
+
     newPlant.image = `/plants/uploads/${id}.jpg`;
     await PlantRepo.save(newPlant);
   }
