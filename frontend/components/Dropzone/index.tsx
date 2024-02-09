@@ -2,11 +2,13 @@
 import { Button, Group, Image, Text, rem, useMantineTheme } from '@mantine/core';
 import { Dropzone, FileWithPath, MIME_TYPES } from '@mantine/dropzone';
 import { IconCloudUpload, IconDownload, IconPhotoFilled, IconTrashFilled, IconX } from '@tabler/icons-react';
-import { useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import classes from './Dropzone.module.css';
 
-
-export default function DropzoneComponent() {
+interface DropzoneComponentProps {
+    form: any;
+}
+export default function DropzoneComponent({ form }: DropzoneComponentProps) {
     const [files, setFiles] = useState<FileWithPath[]>([]);
     const theme = useMantineTheme();
     const openRef = useRef<() => void>(null);
@@ -16,6 +18,11 @@ export default function DropzoneComponent() {
         return <Image key={index} src={imageUrl} onLoad={() => URL.revokeObjectURL(imageUrl)} />;
     });
 
+    const onDrop = useCallback((acceptedFiles: FileWithPath[]) => {
+        setFiles(acceptedFiles);
+        form.setValue('image', acceptedFiles[0]); // Set the value in the form
+    }, [form]);
+
     return (
         <div className={classes.wrapper}>
             {
@@ -23,7 +30,7 @@ export default function DropzoneComponent() {
                     <div>
                         <Dropzone
                             openRef={openRef}
-                            onDrop={setFiles}
+                            onDrop={onDrop}
                             className={classes.dropzone}
                             radius="md"
                             accept={[MIME_TYPES.jpeg, MIME_TYPES.png]}

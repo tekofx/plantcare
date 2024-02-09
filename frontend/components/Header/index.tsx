@@ -1,10 +1,12 @@
 'use client';
 
 /* eslint-disable react/jsx-indent-props */
-import { Burger, Container, Group, Menu } from '@mantine/core';
+import { Burger, Button, Container, Group, Menu, Modal } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { MantineLogo } from '@mantinex/mantine-logo';
+import { IconPlant } from '@tabler/icons-react';
 import { useState } from 'react';
+import PlantForm from '../PlantForm';
 import ThemeSwitch from '../ThemeSwitch';
 import classes from './Header.module.css';
 
@@ -16,7 +18,8 @@ const links = [
 ];
 
 export default function HeaderSimple() {
-    const [opened, { toggle }] = useDisclosure(false);
+    const [openedMenu, { toggle: toggleMenu }] = useDisclosure(false);
+    const [openedModal, { toggle: toggleModal }] = useDisclosure(false);
     const [active, setActive] = useState(links[0].link);
 
     const items = links.map((link) => (
@@ -41,10 +44,17 @@ export default function HeaderSimple() {
                 <Group gap={5} visibleFrom="xs">
                     {items}
                     <ThemeSwitch />
+                    <Button
+                        variant="light"
+                        size="sm"
+                        leftSection={<IconPlant />}
+                        onClick={toggleModal}
+                    >Add Plant
+                    </Button>
                 </Group>
-                <Menu opened={opened}>
+                <Menu opened={openedMenu}>
                     <Menu.Target>
-                        <Burger opened={opened} onClick={toggle} hiddenFrom="xs" size="sm" />
+                        <Burger opened={openedMenu} onClick={toggleMenu} hiddenFrom="xs" size="sm" />
                     </Menu.Target>
 
                     <Menu.Dropdown>
@@ -55,6 +65,10 @@ export default function HeaderSimple() {
                         <ThemeSwitch />
                     </Menu.Dropdown>
                 </Menu>
+                <Modal opened={openedModal} onClose={toggleModal} padding="xl" title="Menu">
+                    <PlantForm />
+                </Modal>
+
             </Container>
         </header>
     );
