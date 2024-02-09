@@ -2,15 +2,27 @@
 import Login from '@/components/Session/login';
 import Register from '@/components/Session/register';
 import { Container } from '@mantine/core';
-import { useState } from 'react';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 
 export default function Page() {
-  const [value, setValue] = useState('');
+  const [existsUser, setExistsUser] = useState(true);
+
+  useEffect(() => {
+    const test = async () => {
+      await axios.get('/api/register/userexists').then((response) => {
+        setExistsUser(response.data);
+      });
+    };
+
+    test();
+  }, []);
 
   return (
     <Container style={{ paddingTop: 20 }}>
-      <Login />
-      <Register />
+
+      {existsUser ? <Login /> : <Register />}
+
     </Container>
   );
 }
