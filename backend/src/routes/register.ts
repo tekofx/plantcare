@@ -5,15 +5,15 @@ import { UserRepo } from '../typeorm.config';
 const router = express.Router();
 
 // This endpoint is used to know if exists a user in the database
-router.get('/', async (req, res) => {
+router.get('/userexists', async (req, res) => {
   console.log('Checking if user exists...');
   await UserRepo.find().then((users) => {
     if (users.length !== 0) {
       console.log('User exists');
-      return res.sendStatus(200);
+      return res.send(true);
     }
     console.log("User doesn't exist");
-    return res.sendStatus(404);
+    return res.send(false);
   });
 });
 
