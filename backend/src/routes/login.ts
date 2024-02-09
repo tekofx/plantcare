@@ -31,4 +31,13 @@ router.post('/', async (req, res) => {
     });
 });
 
+router.post('/verify', (req, res) => {
+  try {
+    jwt.verify(req.body.token, config.JWT_SECRET);
+    return res.send('Token is valid');
+  } catch (error) {
+    return res.status(401).send('Token is invalid');
+  }
+});
+
 export default router;

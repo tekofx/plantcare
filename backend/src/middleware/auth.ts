@@ -5,7 +5,7 @@ import { config } from '../config';
 export default function auth(req: any, res: any, next: any) {
   try {
     const token = req.headers.authorization.split(' ')[1];
-    const decoded = jwt.verify(token, config.BACKEND_SECRET_KEY);
+    const decoded = jwt.verify(token, config.JWT_SECRET);
     req.userData = decoded;
     next();
   } catch (error) {

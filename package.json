@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev:frontend": "cd frontend && next dev",
-    "dev:backend": "nodemon backend/src/index.ts",
+    "dev:backend": "nodemon --watch backend/src backend/src/index.ts",
     "build:frontend": "cd frontend && build",
     "analyze:frontend": "cd frontend && ANALYZE=true next build",
     "start:frontend": "cd frontend start",
@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "@mantine/core": "7.5.1",
+    "@mantine/form": "^7.5.1",
     "@mantine/hooks": "7.5.1",
     "@mantinex/mantine-logo": "^1.0.1",
     "@next/bundle-analyzer": "^14.0.1",
@@ -41,7 +42,8 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "sharp": "^0.33.2",
-    "typeorm": "^0.3.20"
+    "typeorm": "^0.3.20",
+    "universal-cookie": "^7.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.23.2",
