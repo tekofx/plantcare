@@ -66,6 +66,7 @@ router.get('/', auth, async (req, res) => {
 router.post('/', auth, uploadPlants.single('image'), async (req, res) => {
   const { name, description, plantData } = req.body;
   const image = req.file;
+  console.log('image', image);
 
   let aux = plantData;
 
@@ -91,6 +92,7 @@ router.post('/', auth, uploadPlants.single('image'), async (req, res) => {
       return res.status(500).send('An error occurred');
     });
   if (image) {
+    console.log('image', image);
     await sharp(`${plantsDir}/${image.filename}`)
       .resize(500)
       .jpeg()
@@ -106,7 +108,7 @@ router.post('/', auth, uploadPlants.single('image'), async (req, res) => {
   return null;
 });
 
-router.use('/uploads', auth, express.static(plantsDir));
+router.use('/uploads', express.static(plantsDir));
 
 router.get('/:id', auth, async (req, res) => {
   const { id } = req.params;

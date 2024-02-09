@@ -1,12 +1,25 @@
 /* eslint-disable react/jsx-indent-props */
 import { Button, Group, Image, Text, rem, useMantineTheme } from '@mantine/core';
 import { Dropzone, FileWithPath, MIME_TYPES } from '@mantine/dropzone';
+import { UseFormReturnType } from '@mantine/form';
 import { IconCloudUpload, IconDownload, IconPhotoFilled, IconTrashFilled, IconX } from '@tabler/icons-react';
 import { useCallback, useRef, useState } from 'react';
 import classes from './Dropzone.module.css';
 
 interface DropzoneComponentProps {
-    form: any;
+    form: UseFormReturnType<{
+        name: string;
+        description: string;
+        image: FileWithPath;
+    }, (values: {
+        name: string;
+        description: string;
+        image: FileWithPath;
+    }) => {
+        name: string;
+        description: string;
+        image: FileWithPath;
+    }>
 }
 export default function DropzoneComponent({ form }: DropzoneComponentProps) {
     const [files, setFiles] = useState<FileWithPath[]>([]);
@@ -19,8 +32,9 @@ export default function DropzoneComponent({ form }: DropzoneComponentProps) {
     });
 
     const onDrop = useCallback((acceptedFiles: FileWithPath[]) => {
+        console.log(acceptedFiles);
         setFiles(acceptedFiles);
-        form.setValue('image', acceptedFiles[0]); // Set the value in the form
+        form.setFieldValue('image', acceptedFiles[0]);
     }, [form]);
 
     return (

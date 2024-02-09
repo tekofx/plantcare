@@ -65,9 +65,7 @@ export default function HeaderSimple() {
                         <ThemeSwitch />
                     </Menu.Dropdown>
                 </Menu>
-                <Modal opened={openedModal} onClose={toggleModal} padding="xl" title="Menu">
-                    <PlantForm />
-                </Modal>
+                <PlantForm openedModal={openedModal} toggleModal={toggleModal} />
 
             </Container>
         </header>
