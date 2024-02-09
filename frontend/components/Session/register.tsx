@@ -1,6 +1,7 @@
 import {
   Alert,
   Button,
+  Checkbox,
   Container,
   Fieldset,
   PasswordInput,
@@ -8,21 +9,41 @@ import {
   TextInput,
   Title,
 } from '@mantine/core';
-import { useInputState, useValidatedState } from '@mantine/hooks';
+import { useForm } from '@mantine/form';
 import { IconInfoCircle } from '@tabler/icons-react';
 import axios from 'axios';
+import { useState } from 'react';
 
 export default function Register() {
-  const [username, setUsername] = useInputState<string>('');
-  const [passwordRepeat, setPasswordRepeat] = useInputState<string>('');
-  const [{ value, lastValidValue, valid }, setPassword] = useValidatedState(
-    '',
-    (val) => /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(val),
-    true
-  );
+  const [showAlert, setShowAlert] = useState(false);
+
+  const form = useForm({
+    initialValues: {
+      username: '',
+      password: '',
+      passwordRepeat: '',
+      passwordLength: false,
+      passwordUppercaseAndLowercase: false,
+      paswordNumbers: false,
+      passwordSpecialCharacter: false,
+    },
+
+    validate: {
+      username: (value) => (value.length > 0 ? null : 'Username is required'),
+      password: (value) => (value.length > 0 ? null : 'Password is required'),
+      passwordRepeat: (value, values) => (value === values.password ? null : 'Passwords do not match'),
+      passwordLength: (value, values) => (values.password.length > 10 ? null : 'Password is too short'),
+      passwordUppercaseAndLowercase: (value, values) => (/[A-Z]/.test(values.password) && /[a-z]/.test(values.password) ? null : 'Password must contain uppercase and lowercase letters'),
+      paswordNumbers: (value, values) => (/\d/.test(values.password) ? null : 'Password must contain number'),
+      passwordSpecialCharacter: (value, values) => (/[^A-Za-z0-9]/.test(values.password) ? null : 'Password must contain special character'),
+    },
+
+  });
 
   async function onClick() {
-    await axios.get('/api/register', { username, value });
+    form.validate();
+    await axios.post('/api/register', form.values);
+    setShowAlert(true);
   }
 
   return (
@@ -33,28 +54,46 @@ export default function Register() {
           <TextInput
             label="Username"
             placeholder="Your name"
-            onChange={(event) => setUsername(event.currentTarget.value)}
+            {...form.getInputProps('username')}
           />
           <PasswordInput
-            error={!valid}
-            value={value}
-            onChange={(event) => setPassword(event.currentTarget.value)}
+            {...form.getInputProps('password')}
             label="Password"
             placeholder="Password"
           />
-          <Alert variant="light" color="blue" title="Alert title" icon={<IconInfoCircle />}>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. At officiis, quae tempore
-            necessitatibus placeat saepe.
+          <Alert variant="light" color="blue" title="Password must contain" icon={<IconInfoCircle />}>
+            <Stack>
+              <Checkbox
+                label="At least 10 characters"
+                checked={form.isValid('passwordLength')}
+              />
+              <Checkbox
+                label="Uppercase and lowercase"
+                checked={form.isValid('passwordUppercaseAndLowercase')}
+              />
+              <Checkbox
+                label="Numbers"
+                checked={form.isValid('paswordNumbers')}
+              />
+              <Checkbox
+                label="Special character"
+                checked={form.isValid('passwordSpecialCharacter')}
+              />
+            </Stack>
           </Alert>
           <PasswordInput
             label="Repeat password"
             placeholder="Repeat password"
-            value={passwordRepeat}
-            onChange={(event) => setPasswordRepeat(event.currentTarget.value)}
+            {...form.getInputProps('passwordRepeat')}
           />
-          <Button variant="filled" onClick={onClick}>
+          <Button
+            variant="filled"
+            onClick={onClick}
+            disabled={!form.isValid()}
+          >
             Login
           </Button>
+          <Alert variant="light" color="green" title="Created user" icon={<IconInfoCircle />} hidden={!showAlert} />
         </Stack>
       </Fieldset>
     </Container>
