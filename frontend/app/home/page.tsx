@@ -1,4 +1,5 @@
-import { Title } from '@mantine/core';
+import PlantCard from "@/components/PlantCard";
+import { Grid, GridCol, Title } from '@mantine/core';
 import axios from 'axios';
 
 import { cookies } from 'next/headers';
@@ -22,13 +23,14 @@ export default async function HomePage() {
 
   return (
     <>
-      {plants.map((plant) => (
-        <div key={plant.id}>
-          <h1>{plant.name}</h1>
-          <p>{plant.description}</p>
-        </div>
-      ))}
       <Title>My Plants</Title>
+      <Grid>
+        {plants.map((plant) => (
+          <GridCol span={4} key={plant.id}>
+            <PlantCard plant={plant} />
+          </GridCol>
+        ))}
+      </Grid>
     </>
   );
 }
