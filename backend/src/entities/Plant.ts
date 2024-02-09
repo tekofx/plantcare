@@ -9,7 +9,7 @@ export class Plant {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ default: '' })
   name: string; // Custom name
 
   @Column({ default: '' })
