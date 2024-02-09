@@ -2,6 +2,7 @@ import cors from 'cors';
 import express from 'express';
 import session from 'express-session';
 import 'reflect-metadata';
+import { config } from './config';
 import { login, plantdata, plants, register } from './routes';
 import { AppDataSource } from './typeorm.config';
 
@@ -17,7 +18,7 @@ const app = express();
 app.use(express.json());
 app.use(
   session({
-    secret: process.env.BACKEND_SECRET_KEY || 'secret',
+    secret: config.JWT_SECRET || 'secret',
     resave: false,
     saveUninitialized: true,
     cookie: { secure: cookieSecure },

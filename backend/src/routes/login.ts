@@ -11,7 +11,7 @@ router.post('/', async (req, res) => {
       if (user) {
         return bcrypt.compare(req.body.password, user.password).then((result) => {
           if (result) {
-            const token = jwt.sign({ username: user.username }, config.BACKEND_SECRET_KEY, {
+            const token = jwt.sign({ username: user.username }, config.JWT_SECRET, {
               expiresIn: '24h',
             });
             return res.send({
