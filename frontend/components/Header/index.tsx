@@ -1,7 +1,7 @@
 'use client';
 
 /* eslint-disable react/jsx-indent-props */
-import { Burger, Container, Group } from '@mantine/core';
+import { Burger, Container, Group, Menu } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { MantineLogo } from '@mantinex/mantine-logo';
 import { useState } from 'react';
@@ -42,8 +42,19 @@ export default function HeaderSimple() {
                     {items}
                     <ThemeSwitch />
                 </Group>
+                <Menu opened={opened}>
+                    <Menu.Target>
+                        <Burger opened={opened} onClick={toggle} hiddenFrom="xs" size="sm" />
+                    </Menu.Target>
 
-                <Burger opened={opened} onClick={toggle} hiddenFrom="xs" size="sm" />
+                    <Menu.Dropdown>
+                        <Menu.Label>
+                            Menu
+                        </Menu.Label>
+                        {items}
+                        <ThemeSwitch />
+                    </Menu.Dropdown>
+                </Menu>
             </Container>
         </header>
     );
