@@ -34,7 +34,7 @@ export default function PlantCard({ plant }: PlantCardProps) {
     return (
         <Card withBorder radius="md" p="md" className={classes.card}>
             <CardSection>
-                <Image src={plant.image === '' ? undefined : plant.image} alt={plant.name} fit="cover" height={180} fallbackSrc="https://placehold.co/600x400?text=Placeholder" />
+                <Image src={plant.image} alt={plant.name} fit="cover" height={180} fallbackSrc="https://placehold.co/600x400?text=Placeholder" />
             </CardSection>
 
             <CardSection className={classes.section} mt="md">

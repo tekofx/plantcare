@@ -15,7 +15,7 @@ export class Plant {
   @Column({ default: '' })
   description: string; // Custom description
 
-  @Column({ default: '' })
+  @Column({ nullable: true })
   image: string; // Custom image
 
   @ManyToOne(() => PlantData, (plantData) => plantData.plants)
